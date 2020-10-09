@@ -64,16 +64,16 @@
 						<hr />
 						<div class="row text-center">
 							<div class="col">
-								<input type="number" id="building1" placeholder="Building 1" class="text-center numbersOnly numberSize" min="1" max="10" />
-								<input type="number" id="building2" placeholder="Building 2" class="text-center numbersOnly numberSize" min="1" max="10" />
-								<input type="number" id="building3" placeholder="Building 3" class="text-center numbersOnly numberSize" min="1" max="10" />
+								<input type="number" id="building1" placeholder="Building 1" class="text-center numbersOnly numberSize" min="1" max="10" onkeyup="imposeMinMax(this)"/>
+								<input type="number" id="building2" placeholder="Building 2" class="text-center numbersOnly numberSize" min="1" max="10" onkeyup="imposeMinMax(this)" />
+								<input type="number" id="building3" placeholder="Building 3" class="text-center numbersOnly numberSize" min="1" max="10" onkeyup="imposeMinMax(this)" />
 							</div>
 						</div>
 						<div class="row text-center">
 							<div class="col">
-								<input type="number" id="building4" placeholder="Building 4" class="text-center numbersOnly numberSize" min="1" max="10" />
-								<input type="number" id="building5" placeholder="Building 5" class="text-center numbersOnly numberSize" min="1" max="10" />
-								<input type="number" id="building6" placeholder="Building 6" class="text-center numbersOnly numberSize" min="1" max="10" />
+								<input type="number" id="building4" placeholder="Building 4" class="text-center numbersOnly numberSize" min="1" max="10" onkeyup="imposeMinMax(this)" />
+								<input type="number" id="building5" placeholder="Building 5" class="text-center numbersOnly numberSize" min="1" max="10" onkeyup="imposeMinMax(this)" />
+								<input type="number" id="building6" placeholder="Building 6" class="text-center numbersOnly numberSize" min="1" max="10" onkeyup="imposeMinMax(this)" />
 							</div>
 						</div>
 
@@ -130,10 +130,11 @@
 		<div class="row">
 			<div class="col text-center">
 				<pre>
-				<code class="language-js">
+					<code class="language-js">
+				
 // event listener for the do it button
 document.getElementById("calculate").addEventListener("click", () => {
-//declaring vars
+	//declaring vars
 	let b1 = parseInt(document.getElementById("building1").value);
 	let b2 = parseInt(document.getElementById("building2").value);
 	let b3 = parseInt(document.getElementById("building3").value);
@@ -142,6 +143,8 @@ document.getElementById("calculate").addEventListener("click", () => {
 	let b6 = parseInt(document.getElementById("building6").value);
 	//putting the vars in an array to work with
 	let bldgArr = [b1, b2, b3, b4, b5, b6];
+	// reset any empty inputs to 0
+	resetToZero(b1, b2, b3, b4, b5, b6);
 	//clear the colors of from last time
 	clean(bldgArr);
 	//iterate through the loop and find each building that can see the sun and store it in an array
@@ -149,50 +152,50 @@ document.getElementById("calculate").addEventListener("click", () => {
 	let bigTemp = -1;
 	for (let i = 0; i < bldgArr.length; i++) {
 		if (bldgArr[i] > bigTemp) {
-		bigTemp = bldgArr[i];
-		bigArr.push("prog" + (i + 1));
-		console.log(i);
+			bigTemp = bldgArr[i];
+			bigArr.push("prog" + (i + 1));
+			console.log(i);
 		}
 	}
 	//apply the yellow color to the buildings that can see the sun
 	for (let i = 0; i < bigArr.length; i++) {
-	document.getElementById(bigArr[i]).classList.add("bg-warning");
+		document.getElementById(bigArr[i]).classList.add("bg-warning");
 	}
 	progFill();
 	//this takes the user inputted value and sets a percentage to fill each bar
 	function progFill() {
 		for (let i = 0; i <= bldgArr[0] * 10; i++) {
-		let prog = 'prog1';
-		sleep1(i, prog);
-	}
-	for (let j = 0; j <= bldgArr[1] * 10; j++) {
-		let prog = 'prog2';
-		sleep1(j, prog);
+			let prog = 'prog1';
+			sleep1(i, prog);
 		}
-	for (let k = 0; k <= bldgArr[2] * 10; k++) {
-		let prog = 'prog3';
-		sleep1(k, prog);
+		for (let j = 0; j <= bldgArr[1] * 10; j++) {
+			let prog = 'prog2';
+			sleep1(j, prog);
 		}
-	for (let l = 0; l <= bldgArr[3] * 10; l++) {
-		let prog = 'prog4';
-		sleep1(l, prog);
+		for (let k = 0; k <= bldgArr[2] * 10; k++) {
+			let prog = 'prog3';
+			sleep1(k, prog);
 		}
-	for (let z = 0; z <= bldgArr[4] * 10; z++) {
-		let prog = 'prog5';
-		sleep1(z, prog);
+		for (let l = 0; l <= bldgArr[3] * 10; l++) {
+			let prog = 'prog4';
+			sleep1(l, prog);
 		}
-	for (let x = 0; x <= bldgArr[5] * 10; x++) {
-		let prog = 'prog6';
-		sleep1(x, prog);
+		for (let z = 0; z <= bldgArr[4] * 10; z++) {
+			let prog = 'prog5';
+			sleep1(z, prog);
+		}
+		for (let x = 0; x <= bldgArr[5] * 10; x++) {
+			let prog = 'prog6';
+			sleep1(x, prog);
 		}
 	}
 	//this function is called in the previous loops, this fills the bars 1% at a time
 	//with a 10ms delay between each 'tick'
 	function sleep1(i, prog) {
 		setTimeout(function () {
-		document.getElementById(prog).style.height = i + "%";
+			document.getElementById(prog).style.height = i + "%";
 		}, 10 * i)
-	}	
+	}
 })
 //verify user input
 document.querySelectorAll(".numbersOnly").forEach(a => {
@@ -242,7 +245,29 @@ document.getElementById("building5").addEventListener("click", () => {
 document.getElementById("building6").addEventListener("click", () => {
 	cleanText("building6");
 })
-                    </code>
+// forces the correct range of numbers to be input
+function imposeMinMax(el) {
+	if (el.value != "") {
+		if (parseInt(el.value) < parseInt(el.min)) {
+			el.value = el.min;
+		}
+		if (parseInt(el.value) > parseInt(el.max)) {
+			el.value = el.max;
+		}
+	}
+}
+//brings the height to zero if there is no input or invalid input (NaN)
+function resetToZero(b1, b2, b3, b4, b5, b6) {
+	let arr = new Array();
+	arr = b1, b2, b3, b4, b5, b6;
+	for (let i = 0; i < 6; i++) {
+		if (isNaN(arr[i])) {
+			document.getElementById("prog" + (i + 1)).style.height = "0%";
+		}
+	}
+}
+				
+					</code>
                 </pre>
 			</div>
 		</div>

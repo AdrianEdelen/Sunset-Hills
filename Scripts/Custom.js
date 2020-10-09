@@ -9,6 +9,8 @@ document.getElementById("calculate").addEventListener("click", () => {
 	let b6 = parseInt(document.getElementById("building6").value);
 	//putting the vars in an array to work with
 	let bldgArr = [b1, b2, b3, b4, b5, b6];
+	// reset any empty inputs to 0
+	resetToZero(b1, b2, b3, b4, b5, b6);
 	//clear the colors of from last time
 	clean(bldgArr);
 	//iterate through the loop and find each building that can see the sun and store it in an array
@@ -109,4 +111,24 @@ document.getElementById("building5").addEventListener("click", () => {
 document.getElementById("building6").addEventListener("click", () => {
 	cleanText("building6");
 })
-
+// forces the correct range of numbers to be input
+function imposeMinMax(el) {
+	if (el.value != "") {
+		if (parseInt(el.value) < parseInt(el.min)) {
+			el.value = el.min;
+		}
+		if (parseInt(el.value) > parseInt(el.max)) {
+			el.value = el.max;
+		}
+	}
+}
+//brings the height to zero if there is no input or invalid input (NaN)
+function resetToZero(b1, b2, b3, b4, b5, b6) {
+	let arr = new Array();
+	arr = b1, b2, b3, b4, b5, b6;
+	for (let i = 0; i < 6; i++) {
+		if (isNaN(arr[i])) {
+			document.getElementById("prog" + (i + 1)).style.height = "0%";
+		}
+	}
+}
