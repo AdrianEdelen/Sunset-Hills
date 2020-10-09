@@ -10,9 +10,15 @@ document.getElementById("calculate").addEventListener("click", () => {
 
 	//putting the vars in an array to work with
 	let bldgArr = [b1, b2, b3, b4, b5, b6];
+	// clear the colors of from last time
+	for (i = 0; i < bldgArr.length; i++) {
+		if (document.getElementById("building" + (i + 1)).className.match(/(?:^|\s)bg-warning(?!\S)/)) {
+			document.getElementById("building" + (i + 1)).classList.remove("bg-warning");
+		}
+	}
+	//iterate through the loop and find each building that can see the sun and store it in an array
 	let bigArr = new Array();
-		
-		let bigTemp = -1;
+	let bigTemp = -1;
 	for (let i = 0; i < bldgArr.length; i++) {
 		if (bldgArr[i] > bigTemp) {
 			bigTemp = bldgArr[i];
@@ -21,12 +27,12 @@ document.getElementById("calculate").addEventListener("click", () => {
 		}
 
 	}
+	//apply the yellow color to the buildings that can see the sun
 	for (let i = 0; i < bigArr.length; i++) {
-		let barRecolor = document.getElementById(bigArr[i]);
-		barRecolor.className += " bg-Warning";
+		document.getElementById(bigArr[i]).classList.add("bg-warning");
 	}
 	progFill();
-
+	//this takes the user inputted value and sets a percentage to fill each bar
 	function progFill() {
 		for (let i = 0; i <= bldgArr[0] * 10; i++) {
 			let prog = 'prog1';
@@ -53,6 +59,8 @@ document.getElementById("calculate").addEventListener("click", () => {
 			sleep1(x,prog);
 		}
 	}
+	//this function is called in the previous loops, this fills the bars 1% at a time
+	//with a 10ms delay between each 'tick'
 	function sleep1(i,prog) {
 		setTimeout(function () {
 			document.getElementById(prog).style.height = i + "%";
@@ -60,6 +68,7 @@ document.getElementById("calculate").addEventListener("click", () => {
 		}, 10 * i)
 	}
 })
+//verify user input
 document.querySelectorAll(".numbersOnly").forEach(a => {
 	a.addEventListener("keydown", (evt) => {
 		let keyChar = (evt.which) ? evt.which : evt.keyCode
