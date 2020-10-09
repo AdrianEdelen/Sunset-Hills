@@ -16,10 +16,65 @@ document.getElementById("calculate").addEventListener("click", () => {
 	for (let i = 0; i < bldgArr.length; i++) {
 		if (bldgArr[i] > bigTemp) {
 			bigTemp = bldgArr[i];
-			bigArr.push("Building" + i);
-			console.log(i + 1);
+			bigArr.push("prog" + (i + 1));
+			console.log(i);
 		}
 
 	}
-	
+	for (let i = 0; i < bigArr.length; i++) {
+		let barRecolor = document.getElementById(bigArr[i]);
+		barRecolor.className += " bg-Warning";
+	}
+	progFill();
+
+	function progFill() {
+		for (let i = 0; i <= bldgArr[0] * 10; i++) {
+			let prog = 'prog1';
+			sleep1(i,prog);
+		}
+		for (let j = 0; j <= bldgArr[1] * 10; j++) {
+			let prog = 'prog2';
+			sleep1(j, prog);
+		}
+		for (let k = 0; k <= bldgArr[2] * 10; k++) {
+			let prog = 'prog3';
+			sleep1(k, prog);
+		}
+		for (let l = 0; l <= bldgArr[3] * 10; l++) {
+			let prog = 'prog4';
+			sleep1(l, prog);
+		}
+		for (let z = 0; z <= bldgArr[4] * 10; z++) {
+			let prog = 'prog5';
+			sleep1(z, prog);	
+		}
+		for (let x = 0; x <= bldgArr[5] * 10; x++) {
+			let prog = 'prog6';
+			sleep1(x,prog);
+		}
+	}
+	function sleep1(i,prog) {
+		setTimeout(function () {
+			document.getElementById(prog).style.height = i + "%";
+			
+		}, 10 * i)
+	}
 })
+document.querySelectorAll(".numbersOnly").forEach(a => {
+	a.addEventListener("keydown", (evt) => {
+		let keyChar = (evt.which) ? evt.which : evt.keyCode
+
+		if (keyChar >= 48 && keyChar <= 57 ||
+			keyChar >= 96 && keyChar <= 105 ||
+			keyChar == 08 ||
+			keyChar == 37 ||
+			keyChar == 39) {
+			return true;
+		} else {
+			evt.preventDefault();
+			return false;
+		}
+	})
+})
+
+
