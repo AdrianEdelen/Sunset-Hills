@@ -14,6 +14,8 @@ document.getElementById("calculate").addEventListener("click", () => {
 	for (i = 0; i < bldgArr.length; i++) {
 		if (document.getElementById("building" + (i + 1)).className.match(/(?:^|\s)bg-warning(?!\S)/)) {
 			document.getElementById("building" + (i + 1)).classList.remove("bg-warning");
+		} else {
+			continue;
 		}
 	}
 	//iterate through the loop and find each building that can see the sun and store it in an array
